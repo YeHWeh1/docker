@@ -1,0 +1,24 @@
+# ===== 数据文件（体积大，按任务书要求不入版本库）=====
+模拟数据/
+*.csv
+
+# ===== 日志 =====
+*.log
+pull.log
+
+# ===== 临时与调试文件 =====
+_temp/
+d2ldocx-work/
+.dsh/
+
+# ===== 密钥与配置 =====
+.env
+*.key
+*.pem
+
+# ===== 系统与缓存 =====
+Thumbs.db
+desktop.ini
+__pycache__/
+node_modules/
+.DS_Store

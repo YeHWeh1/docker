@@ -1,0 +1,66 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: meta-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: metastore
+    ports:
+      - "3307:3306"   # 宿主机用 3307，避开本机已占用的 MySQL80(3306)
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  hive-metastore:
+    image: apache/hive:4.0.0
+    container_name: hive-metastore
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      SERVICE_NAME: metastore
+      DB_DRIVER: mysql
+      SERVICE_OPTS: >-
+        -Djavax.jdo.option.ConnectionDriverName=com.mysql.cj.jdbc.Driver
+        -Djavax.jdo.option.ConnectionURL=jdbc:mysql://meta-mysql:3306/metastore?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
+        -Djavax.jdo.option.ConnectionUserName=root
+        -Djavax.jdo.option.ConnectionPassword=root
+        -Djava.net.preferIPv4Stack=true
+    ports:
+      - "9083:9083"
+    tmpfs:
+      - /tmp
+    volumes:
+      - ./lib/mysql-connector-j-8.4.0.jar:/opt/hive/lib/mysql-connector-j-8.4.0.jar:ro
+      - hive-data:/opt/hive/data
+
+  hive-server:
+    image: apache/hive:4.0.0
+    container_name: hive-server
+    restart: unless-stopped
+    depends_on:
+      - hive-metastore
+    environment:
+      SERVICE_NAME: hiveserver2
+      HIVESERVER2_PID_DIR: /tmp/hive
+      SERVICE_OPTS: >-
+        -Dhive.metastore.uris=thrift://hive-metastore:9083
+        -Xmx2g -XX:+UseG1GC -XX:-UseCompressedOops -Djava.net.preferIPv4Stack=true
+    ports:
+      - "10000:10000"
+    tmpfs:
+      - /tmp/hive
+    volumes:
+      - ./模拟数据:/data:ro
+      - ./lib/mysql-connector-j-8.4.0.jar:/opt/hive/lib/mysql-connector-j-8.4.0.jar:ro
+      - hive-data:/opt/hive/data
+
+volumes:
+  mysql-data:
+  hive-data:
