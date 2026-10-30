@@ -1,4 +1,4 @@
-﻿# ============================================================
+# ============================================================
 #  第1周 一键运行脚本
 #  作用：启动环境 → 等待就绪 → 执行数据清洗 → 展示结果
 #  用法：双击 "一键运行.bat"，或右键此脚本 -> 使用 PowerShell 运行
@@ -67,8 +67,8 @@ for ($round = 1; $round -le 2; $round++) {
     }
     if ($ready) { break }
     if ($round -eq 1) {
-        Write-Host '   仍未就绪，重启 hive-server 再等一轮 ...' -ForegroundColor Yellow
-        docker compose restart hive-server 2>&1 | Out-Null
+        Write-Host '   仍未就绪，重建 hive-server 再等一轮 ...' -ForegroundColor Yellow
+        docker compose up -d --force-recreate hive-server 2>&1 | Out-Null
         Start-Sleep 10
     }
 }

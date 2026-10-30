@@ -54,8 +54,6 @@ services:
         -Xmx2g -XX:+UseG1GC -XX:-UseCompressedOops -Djava.net.preferIPv4Stack=true
     ports:
       - "10000:10000"
-    tmpfs:
-      - /tmp/hive
     volumes:
       - ./模拟数据:/data:ro
       - ./lib/mysql-connector-j-8.4.0.jar:/opt/hive/lib/mysql-connector-j-8.4.0.jar:ro
