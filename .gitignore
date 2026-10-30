@@ -26,3 +26,6 @@ desktop.ini
 __pycache__/
 node_modules/
 .DS_Store
+
+# ===== 个人材料（不进仓库）=====
+个人文件/
