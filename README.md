@@ -32,10 +32,11 @@
 
 | 组件 | 版本 | 用途 |
 |---|---|---|
-| Docker Desktop | 29.x | 容器运行环境（WSL2 后端） |
+| Docker Desktop | 4.96.3（Docker Engine 29.9.2） | 容器运行环境（WSL2 后端） |
+| Docker Compose | v5.6.1 | 多容器编排 |
 | Apache Hive | 4.0.0 | 数据仓库，包含 Metastore 与 HiveServer2 |
-| MySQL | 8.0 | Hive 元数据库 |
-| Git | 2.56 | 版本控制 |
+| MySQL | 8.0.46 | Hive 元数据库 |
+| Git | 2.56.0 | 版本控制 |
 
 服务端口（宿主机）：`10000`（HiveServer2）、`9083`（Metastore）、`3307`（MySQL）。
 
