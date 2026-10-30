@@ -16,6 +16,10 @@ d2ldocx-work/
 *.key
 *.pem
 
+# ===== 打包产物 =====
+*.zip
+*.tar.gz
+
 # ===== 系统与缓存 =====
 Thumbs.db
 desktop.ini

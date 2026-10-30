@@ -49,7 +49,9 @@
 ├── lib/
 │   └── mysql-connector-j-8.4.0.jar   # Hive 镜像缺失的 MySQL 驱动
 ├── sql/
-│   ├── ods/create_ods.sql      # ODS 建库建表与数据导入
+│   ├── ods/
+│   │   ├── create_ods.sql      # ODS 建库建表（6 张表）
+│   │   └── load_ods.sql        # 数据导入与行数校验
 │   └── clean/                  # 质量扫描与清洗脚本
 │       ├── 00_quality_scan.sql # 五维度扫描（只读）
 │       ├── 01_dwd_user.sql     # 用户表缺失值处理
@@ -58,9 +60,11 @@
 │       ├── 04_dwd_other.sql    # 门店表下沉
 │       └── 05_dwd_extra.sql    # 明细/行为表异常标记
 ├── reports/
-│   └── 质量预评估表.md          # 五维度评估结果与清洗前后对比
+│   ├── 数据质量预评估表.xlsx    # 五维度扫描结果（7 个工作表）
+│   └── 质量预评估表.md          # 同内容 Markdown 版，便于阅读
 ├── docs/
 │   ├── 环境搭建笔记.md          # 9 个环境问题的现象、排查与解决
+│   ├── 云仓五号_第1周_AI协同日志.md  # AI 协同记录（9 条）
 │   └── 答辩手册.md              # 演示流程、代码讲解、问答准备
 └── 模拟数据/                    # 6 个 CSV（已 .gitignore 忽略，需自行放入）
 ```
